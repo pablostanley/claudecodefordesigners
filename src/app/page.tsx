@@ -37,6 +37,20 @@ export default function Home() {
           </TabsContent>
         </main>
       </Tabs>
+
+      {/* Footer */}
+      <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
+        made by{" "}
+        <a
+          href="https://pablostanley.substack.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-4 hover:text-foreground transition-colors"
+        >
+          pablo stanley
+        </a>
+        {" "}— shippit
+      </footer>
     </div>
   );
 }
