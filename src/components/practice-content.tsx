@@ -1,4 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
 export function PracticeContent() {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="space-y-8 pb-16">
       <header className="mb-12">
@@ -10,129 +17,108 @@ export function PracticeContent() {
         </p>
       </header>
 
-      {/* Setup Steps */}
-      <div className="rounded-xl border border-border/50 bg-card p-8 mb-4">
-        <h2 className="text-xl font-bold tracking-tight mb-6">
-          Before you start
-        </h2>
-        <ol className="space-y-6">
-          <li className="flex gap-4">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
-              1
-            </span>
-            <div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong>Open your terminal.</strong> On Mac, search for Terminal
-                in Spotlight, or use{" "}
-                <a
-                  href="https://ghostty.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-4 hover:text-foreground transition-colors"
-                >
-                  Ghostty
-                </a>{" "}
-                if u want something nicer.
-              </p>
-            </div>
-          </li>
-          <li className="flex gap-4">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
-              2
-            </span>
-            <div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong>Create a folder and cd into it.</strong> This is where
-                your project will live.
-              </p>
-              <div className="rounded-lg bg-[#1a1a1a] border border-white/5 overflow-x-auto mt-3">
-                <pre className="p-4 text-sm leading-relaxed">
-                  <code className="text-neutral-300 font-mono">
-                    {`mkdir my-project && cd my-project`}
-                  </code>
-                </pre>
-              </div>
-            </div>
-          </li>
-          <li className="flex gap-4">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
-              3
-            </span>
-            <div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong>Start Claude with skip permissions.</strong> So u
-                don&apos;t have to say &ldquo;yes&rdquo; to every action.
-              </p>
-              <div className="rounded-lg bg-[#1a1a1a] border border-white/5 overflow-x-auto mt-3">
-                <pre className="p-4 text-sm leading-relaxed">
-                  <code className="text-neutral-300 font-mono">
-                    claude --dangerously-skip-permissions
-                  </code>
-                </pre>
-              </div>
-            </div>
-          </li>
-          <li className="flex gap-4">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
-              4
-            </span>
-            <div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong>Write your prompt.</strong> Be specific. Paste one of
-                the exercise prompts below, or write your own. Hit enter and
-                watch Claude build it.
-              </p>
-            </div>
-          </li>
-          <li className="flex gap-4">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
-              5
-            </span>
-            <div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong>Connect GitHub &amp; deploy.</strong> Once you&apos;re
-                happy with it, ask Claude to set up git and push to GitHub. Then
-                deploy.
-              </p>
-              <div className="rounded-lg bg-[#1a1a1a] border border-white/5 overflow-x-auto mt-3">
-                <pre className="p-4 text-sm leading-relaxed">
-                  <code className="text-neutral-300 font-mono">
-                    {`# just tell Claude:
-"initialize a git repo, create a GitHub repository called my-project, and push everything"
+      {/* Setup Steps — Collapsible */}
+      <div className="rounded-xl border border-border/50 bg-card overflow-hidden">
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex w-full items-center justify-between p-6 text-left hover:bg-muted/30 transition-colors cursor-pointer"
+        >
+          <div>
+            <h2 className="text-xl font-bold tracking-tight">
+              Before you start
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Quick setup guide before prompting
+            </p>
+          </div>
+          <ChevronDown
+            className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          />
+        </button>
+        {open && (
+          <div className="px-6 pb-6 pt-0">
+            <hr className="border-border/50 mb-6" />
+            <ol className="space-y-6">
+              <SetupStep number={1}>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  <strong>Open your terminal.</strong> On Mac, search for
+                  Terminal in Spotlight, or use{" "}
+                  <a
+                    href="https://ghostty.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:text-foreground transition-colors"
+                  >
+                    Ghostty
+                  </a>{" "}
+                  if u want something nicer.
+                </p>
+              </SetupStep>
+              <SetupStep number={2}>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  <strong>Create a folder and cd into it.</strong> This is where
+                  your project will live.
+                </p>
+                <CodeSnippet code="mkdir my-project && cd my-project" />
+              </SetupStep>
+              <SetupStep number={3}>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  <strong>Start Claude with skip permissions.</strong> So u
+                  don&apos;t have to say &ldquo;yes&rdquo; to every action.
+                </p>
+                <CodeSnippet code="claude --dangerously-skip-permissions" />
+              </SetupStep>
+              <SetupStep number={4}>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  <strong>Write your prompt.</strong> Be specific. Paste one of
+                  the exercise prompts below, or write your own. Hit enter and
+                  watch Claude build it.
+                </p>
+              </SetupStep>
+              <SetupStep number={5}>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  <strong>Connect GitHub &amp; deploy.</strong> Once you&apos;re
+                  happy with it, ask Claude to set up git and push to GitHub.
+                  Then deploy.
+                </p>
+                <CodeSnippet
+                  code={`# just tell Claude:
+"init git, create a GitHub repo called my-project, push everything"
 
 # then:
 "deploy this to Vercel"`}
-                  </code>
-                </pre>
-              </div>
-              <p className="text-sm text-muted-foreground/70 mt-3">
-                Make sure u have the{" "}
-                <a
-                  href="https://cli.github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-4 hover:text-foreground transition-colors"
-                >
-                  GitHub CLI
-                </a>{" "}
-                installed (<code className="inline-code">brew install gh</code>
-                ) and logged in (<code className="inline-code">gh auth login</code>
-                ). Claude uses it to create repos and push for u. For deploying,
-                install the{" "}
-                <a
-                  href="https://vercel.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-4 hover:text-foreground transition-colors"
-                >
-                  Vercel CLI
-                </a>{" "}
-                (<code className="inline-code">npm i -g vercel</code>) or add
-                the Vercel MCP.
-              </p>
-            </div>
-          </li>
-        </ol>
+                />
+                <p className="text-sm text-muted-foreground/70 mt-3">
+                  Make sure u have the{" "}
+                  <a
+                    href="https://cli.github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:text-foreground transition-colors"
+                  >
+                    GitHub CLI
+                  </a>{" "}
+                  installed (
+                  <code className="inline-code">brew install gh</code>) and
+                  logged in (
+                  <code className="inline-code">gh auth login</code>). Claude
+                  uses it to create repos and push for u. For deploying, install
+                  the{" "}
+                  <a
+                    href="https://vercel.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:text-foreground transition-colors"
+                  >
+                    Vercel CLI
+                  </a>{" "}
+                  (<code className="inline-code">npm i -g vercel</code>) or add
+                  the Vercel MCP.
+                </p>
+              </SetupStep>
+            </ol>
+          </div>
+        )}
       </div>
 
       <hr className="border-border/50 my-12" />
@@ -173,6 +159,35 @@ export function PracticeContent() {
   );
 }
 
+function SetupStep({
+  number,
+  children,
+}: {
+  number: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <li className="flex gap-4 min-w-0">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
+        {number}
+      </span>
+      <div className="min-w-0 flex-1">{children}</div>
+    </li>
+  );
+}
+
+function CodeSnippet({ code }: { code: string }) {
+  return (
+    <div className="rounded-lg bg-[#1a1a1a] border border-white/5 overflow-x-auto mt-3">
+      <pre className="p-4 text-sm leading-relaxed">
+        <code className="text-neutral-300 font-mono whitespace-pre-wrap break-words">
+          {code}
+        </code>
+      </pre>
+    </div>
+  );
+}
+
 function ExerciseCard({
   number,
   title,
@@ -187,9 +202,9 @@ function ExerciseCard({
   concepts: string[];
 }) {
   return (
-    <div className="rounded-xl border border-border/50 bg-card p-8 transition-colors">
+    <div className="rounded-xl border border-border/50 bg-card p-8 transition-colors overflow-hidden">
       <div className="flex items-center gap-3 mb-4">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-sm font-bold text-muted-foreground">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-bold text-muted-foreground">
           {number}
         </span>
         <h2 className="text-xl font-bold tracking-tight">{title}</h2>
@@ -202,7 +217,7 @@ function ExerciseCard({
           prompt
         </div>
         <pre className="p-4 pt-2 text-sm leading-relaxed">
-          <code className="text-neutral-300 font-mono whitespace-pre-wrap">
+          <code className="text-neutral-300 font-mono whitespace-pre-wrap break-words">
             {prompt}
           </code>
         </pre>
