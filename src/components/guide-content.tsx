@@ -647,7 +647,42 @@ npx skills add agent-browser           # browser automation skill`}
 
       {/* Section 17 */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold tracking-tight mb-6">17. Deploy</h2>
+        <h2 className="text-2xl font-bold tracking-tight mb-6">
+          17. Set Up GitHub
+        </h2>
+        <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+          Claude can handle all your git stuff. Create repos, commit, push,
+          make PRs... u just have to tell it what u want.
+        </p>
+        <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+          First, install the{" "}
+          <strong>GitHub CLI</strong> and log in:
+        </p>
+        <CodeBlock
+          code={`brew install gh
+gh auth login`}
+        />
+        <p className="text-lg text-muted-foreground leading-relaxed mt-6 mb-6">
+          Once that&apos;s done, Claude can use it directly. Just say things like:
+        </p>
+        <CodeBlock
+          code={`"initialize git, create a repo on GitHub called my-project, and push"
+"commit everything with a good message"
+"create a PR with a summary of what changed"`}
+        />
+        <p className="text-lg text-muted-foreground leading-relaxed mt-6">
+          That&apos;s it. Claude runs{" "}
+          <code className="inline-code">gh</code> commands under the hood. No
+          need to memorize git — just tell Claude what u want and it handles
+          the rest.
+        </p>
+      </section>
+
+      <hr className="border-border/50 my-12" />
+
+      {/* Section 18 */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-bold tracking-tight mb-6">18. Deploy</h2>
         <p className="text-lg text-muted-foreground leading-relaxed">
           <strong>Vercel:</strong> sign up with GitHub, import repo, click
           Deploy. Every push auto-deploys after that. Or install the{" "}
@@ -658,10 +693,10 @@ npx skills add agent-browser           # browser automation skill`}
 
       <hr className="border-border/50 my-12" />
 
-      {/* Section 18 */}
+      {/* Section 19 */}
       <section className="mb-16">
         <h2 className="text-2xl font-bold tracking-tight mb-6">
-          18. Resources
+          19. Resources
         </h2>
         <ul className="list-disc pl-6 space-y-3 text-lg text-muted-foreground">
           <li>
